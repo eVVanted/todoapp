@@ -1,0 +1,22 @@
+body {
+  padding-top: 5rem;
+}
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.login-form{
+  margin-top: 200px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.done_icon{
+  height: 31px;
+}
+
+.add-task{
+  text-align: center;
+  margin-bottom: 30px;
+}
