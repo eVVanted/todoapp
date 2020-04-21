@@ -1,31 +1,31 @@
 <?php
-require("functions.php");
-include("header.php");
-include("menu.php");
+require_once("functions.php");
+require_once("header.php");
+require_once("menu.php");
 ?>
 
 
 
     <main role="main" class="container">
 
-        <?php if(isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']):?>
+        <?php if(!$auth->isGuest()):?>
             <div class="starter-template">
-                <?php if($parent_id):?>
-                    <h1>SubTasks of the task with id <?=$parent_id?> for <?= $_COOKIE['logged_in_user']?></h1>
+                <?php if($todoParentId):?>
+                    <h1>SubTODOs of the TODO with id <?=$todoParentId?> for <?= $user->email?></h1>
                 <?php else: ?>
-                    <h1>Tasks for <?= $_COOKIE['logged_in_user']?></h1>
+                    <h1>TODOs for <?= $user->email?></h1>
                 <?php endif; ?>
 
             </div>
         <div class="add-task">
-            <?php if($parent_id):?>
-                <a href="/taskform.php?sub=<?=$parent_id?>" class="badge badge-primary">New SubTask</a>
+            <?php if($todoParentId):?>
+                <a href="<?= \MyApp\classes\PagesHelper::TODO_FORM?>?sub=<?=$todoParentId?>" class="badge badge-primary">New SubTODO</a>
             <?php else: ?>
-                <a href="/taskform.php" class="badge badge-primary">New Task</a>
+                <a href="<?= \MyApp\classes\PagesHelper::TODO_FORM?>" class="badge badge-primary">New Task</a>
             <?php endif; ?>
 
         </div>
-            <?php if($error):?>
+            <?php if($error_message):?>
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span id="message"><strong>Error!</strong> <?= $error_message ?></span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -33,50 +33,50 @@ include("menu.php");
                     </button>
                 </div>
             <?php endif;?>
-                <?php if($todos_array): ?>
-                <?php foreach($todos_array as $todo): ?>
+                <?php if($todos): ?>
+                <?php foreach($todos as $todo): ?>
                         <div class="list-group">
                             <div class="list-group-item list-group-item-action flex-column align-items-start">
                                 <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1"><?= $todo['title']?></h5>
-                                    <small><?= $todo['date']?></small>
+                                    <h5 class="mb-1"><?= $todo->title?></h5>
+                                    <small><?= $todo->date?></small>
                                 </div>
                                 <div class="d-flex">
-                                    <p class="mb-1"><?= $todo['text']?></p>
+                                    <p class="mb-1"><?= $todo->text?></p>
                                     <span class="ml-auto">
-                                        <?php if($todo['done']): ?>
+                                        <?php if($todo->is_done): ?>
                                         <img class="done_icon" src="assets/img/done.png" alt="already done">
                                         <?php else: ?>
                                             <form action="" method="post">
                                                 <input type="hidden" name="action-done">
-                                                <input type="hidden" name="id" value="<?=$todo['id']?>">
+                                                <input type="hidden" name="id" value="<?=$todo->id?>">
                                                 <button type="submit" class="btn btn-primary btn-sm ">Done</button>
                                             </form>
 
                                         <?php endif; ?>
                                         <form action="" method="post">
                                             <input type="hidden" name="action-delete">
-                                            <input type="hidden" name="id" value="<?=$todo['id']?>">
+                                            <input type="hidden" name="id" value="<?=$todo->id?>">
                                             <button type="submit" class="btn btn-danger btn-sm ">Delete</button>
                                         </form>
 
                                     </span>
 
                                 </div>
-                                <?php if(!$parent_id):?>
-                                <small><a href="?sub=<?= $todo['id']?>">SubTasks</a></small>
+                                <?php if(!$todoParentId):?>
+                                <small><a href="?sub=<?= $todo->id?>">SubTODOs</a></small>
                                 <?php endif; ?>
-                                <small><a href="/taskform.php?edit=<?=$todo['id']?>">Edit</a></small>
+                                <small><a href="<?= \MyApp\classes\PagesHelper::TODO_FORM?>?edit=<?=$todo->id?>">Edit</a></small>
                             </div>
                         </div>
                 <?php endforeach; ?>
                 <?php else: ?>
                     <div class="starter-template">
 
-                        <?php if($parent_id):?>
-                            <h1>There is no SubTasks of the task with id <?=$parent_id?> for <?= $_COOKIE['logged_in_user']?></h1>
+                        <?php if($todoParentId):?>
+                            <h1>There is no SubTODOs of the task with id <?=$todoParentId?> for <?= $user->email?></h1>
                         <?php else: ?>
-                            <h1>There is no TODOs for <?= $_COOKIE['logged_in_user']?></h1>
+                            <h1>There is no TODOs for <?= $user->email?></h1>
                         <?php endif; ?>
                     </div>
                 <?php endif; ?>
@@ -90,6 +90,6 @@ include("menu.php");
     </main><!-- /.container -->
 
 <?php
-include("footer.php");
+require_once("footer.php");
 ?>
 

@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bcc195e8-1eb9-48a5-be46-c3228c5c836c" name="Default Changelist" comment="" />
+    <list default="true" id="bcc195e8-1eb9-48a5-be46-c3228c5c836c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/public_html.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/public_html.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/db.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/todo.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/repositories/TodoRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/user.php" beforeDir="false" afterPath="$PROJECT_DIR$/classes/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions.php" beforeDir="false" afterPath="$PROJECT_DIR$/functions.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.php" beforeDir="false" afterPath="$PROJECT_DIR$/menu.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/register.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/taskform.php" beforeDir="false" afterPath="$PROJECT_DIR$/todoform.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
     </execution>
@@ -19,6 +35,40 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit-mock-objects" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-common" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-token-stream" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/reflection-docblock" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
+      <path value="$PROJECT_DIR$/vendor/phpdocumentor/type-resolver" />
+      <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-text-template" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-file-iterator" />
+      <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/code-unit-reverse-lookup" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/comparator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/diff" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/environment" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/exporter" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/global-state" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/object-enumerator" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/recursion-context" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/resource-operations" />
+      <path value="$PROJECT_DIR$/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/vendor/sebastian/version" />
+      <path value="$PROJECT_DIR$/vendor/myclabs/deep-copy" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
+    </include_path>
+  </component>
   <component name="ProjectId" id="1WZUBAJowl3HWG4vZnvBo0tzvwH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -27,12 +77,30 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/classes/repositories" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Open Server 5.3.5\OSPanel\domains\todoapp.loc\classes\repositories" />
+      <recent name="C:\Open Server 5.3.5\OSPanel\domains\todoapp.loc\classes\auth" />
+      <recent name="C:\Open Server 5.3.5\OSPanel\domains\todoapp.loc\classes\auth\storage" />
       <recent name="$PROJECT_DIR$/classes" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="AuthServiceTest.testIsGuestFalse" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="MyApp\tests\AuthServiceTest" file="$PROJECT_DIR$/tests/AuthTest.php" method="testIsGuestFalse" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.AuthServiceTest.testIsGuestFalse" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -58,6 +126,17 @@
       <updated>1579356473047</updated>
       <workItem from="1579356475508" duration="16763000" />
       <workItem from="1579432803696" duration="30572000" />
+      <workItem from="1583180655107" duration="1492000" />
+      <workItem from="1583261744461" duration="6616000" />
+      <workItem from="1583437023379" duration="5434000" />
+      <workItem from="1583593443490" duration="24654000" />
+      <workItem from="1584202149088" duration="599000" />
+      <workItem from="1584282306130" duration="1839000" />
+      <workItem from="1586246742559" duration="605000" />
+      <workItem from="1586719358195" duration="9000" />
+      <workItem from="1586808597048" duration="614000" />
+      <workItem from="1587200327960" duration="791000" />
+      <workItem from="1587312173126" duration="46451000" />
     </task>
     <servers />
   </component>
@@ -65,14 +144,47 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="672" y="463" key="NewPhpFileDialog" timestamp="1579450543906">
-      <screen x="65" y="24" width="1615" height="1026" />
+    <state x="524" y="110" width="646" height="789" key="#AuthServiceTest.testIsGuestFalse" timestamp="1583600014311">
+      <screen x="0" y="0" width="1680" height="1010" />
     </state>
+    <state x="524" y="110" width="646" height="789" key="#AuthServiceTest.testIsGuestFalse/0.0.1680.1010@0.0.1680.1010" timestamp="1583600014311" />
+    <state x="304" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1583700029960">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="304" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1583700029960" />
+    <state x="570" y="261" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1587478326148">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="570" y="261" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1587478326148" />
+    <state x="587" y="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1583691398570">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="587" y="353" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1680.1010@0.0.1680.1010" timestamp="1583691398570" />
+    <state x="569" y="186" key="FileChooserDialogImpl" timestamp="1587317181568">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="569" y="186" key="FileChooserDialogImpl/0.0.1680.1010@0.0.1680.1010" timestamp="1587317181568" />
+    <state x="584" y="320" key="NewPhpClassDialog" timestamp="1587478198007">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="584" y="320" key="NewPhpClassDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1587478198007" />
+    <state x="631" y="432" key="NewPhpFileDialog" timestamp="1583597012977">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="631" y="432" key="NewPhpFileDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1583597012977" />
     <state x="672" y="463" key="NewPhpFileDialog/65.24.1615.1026@65.24.1615.1026" timestamp="1579450543906" />
+    <state x="341" y="148" key="SettingsEditor" timestamp="1583767542717">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="341" y="148" key="SettingsEditor/0.0.1680.1010@0.0.1680.1010" timestamp="1583767542717" />
     <state x="534" y="366" key="com.intellij.ide.util.TipDialog" timestamp="1579432836325">
       <screen x="65" y="24" width="1615" height="1026" />
     </state>
     <state x="534" y="366" key="com.intellij.ide.util.TipDialog/65.24.1615.1026@65.24.1615.1026" timestamp="1579432836325" />
+    <state x="522" y="69" key="refactoring.ChangeSignatureDialog" timestamp="1587469933086">
+      <screen x="0" y="0" width="1680" height="1010" />
+    </state>
+    <state x="522" y="69" key="refactoring.ChangeSignatureDialog/0.0.1680.1010@0.0.1680.1010" timestamp="1587469933086" />
     <state x="745" y="250" key="run.anything.popup" timestamp="1579468358008">
       <screen x="65" y="24" width="1615" height="1026" />
     </state>

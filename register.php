@@ -1,10 +1,8 @@
 <?php
-require("functions.php");
-include("header.php");
-include("menu.php");
-if(isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
-    header('Location: /');
-}
+require_once("functions.php");
+require_once("header.php");
+require_once("menu.php");
+
 ?>
 
     <div class="container">
@@ -23,7 +21,7 @@ if(isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
                 <input type="password" class="form-control" id="password2" name="password2" placeholder="Repeat your Password" required>
             </div>
             <div  id="message-block">
-                <?php if($form_invalid):?>
+                <?php if($error_message):?>
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
                         <span id="message"><strong>Error!</strong> <?= $error_message ?></span>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -38,5 +36,5 @@ if(isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
     </div>
 
 <?php
-include("footer.php");
+require_once("footer.php");
 ?>

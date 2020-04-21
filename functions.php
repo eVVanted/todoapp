@@ -1,132 +1,144 @@
 <?php
-require("classes/db.php");
-require("classes/user.php");
-require("classes/todo.php");
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+session_start() ;
 
-$uri = $_SERVER['REQUEST_URI'];
-$form_invalid = false;
+
+
+use MyApp\classes\auth\Auth;
+use MyApp\classes\dispatchers\EventDispatcher;
+use MyApp\classes\events\TodoDeleteEvent;
+use MyApp\classes\forms\TodoForm;
+use MyApp\classes\forms\UserLoginForm;
+use MyApp\classes\forms\UserRegisterForm;
+use MyApp\classes\services\TodoService;
+use MyApp\classes\services\UserService;
+use MyApp\classes\repositories\TodoRepository;
+use MyApp\classes\User;
+use MyApp\classes\auth\storage\AuthSessionStorage;
+use MyApp\classes\PagesHelper;
+use MyApp\classes\repositories\UserRepository;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+
+$eventDispatcher = new EventDispatcher([
+    'MyApp\classes\events\TodoDeleteEvent' => [
+        'MyApp\classes\listeners\TodoDeleteEventListener'
+    ],
+    'MyApp\classes\events\TodoDoneEvent' => [
+        'MyApp\classes\listeners\MakeDoneTodoChildren',
+        'MyApp\classes\listeners\MakeDoneTodoParent',
+    ]
+]);
+
+
+$sessionStorage = new AuthSessionStorage('user');
+$auth = new Auth($sessionStorage);
 $error_message = '';
-$todos_array = [];
-$parent_id = 0;
-$edit_todo = [];
-$error = false;
+$todos = [];
+$user = null;
+$todoRepository =new TodoRepository();
+$todoService = new TodoService($todoRepository, $eventDispatcher);
+$todoParentId = PagesHelper::getTodoParentId();
+$todo_id = PagesHelper::getTodoId();
+$user = $auth->currentUser();
 
 
-if($uri === '/' && isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
-    $todos_array = Todo::getTodos($_COOKIE['logged_in_user_id']);
-//    var_dump($todos_array);
+if(!$auth->isGuest() && (PagesHelper::isLoginPage() || PagesHelper::isRegisterPage())){
+    PagesHelper::goHome();
 }
 
-if(isset($_GET['sub']) && stripos ( $uri, '/?sub=') >=0 && isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
-    $parent_id = $_GET['sub'];
-    $todos_array = Todo::getSubTodos($_COOKIE['logged_in_user_id'], $_GET['sub']);
-}
-
-if(isset($_GET['sub']) && stripos ( $uri, '/taskform.php?sub=') >=0 && isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
-    $parent_id = $_GET['sub'];
-}
-if(isset($_GET['edit']) && stripos ( $uri, '/taskform.php?edit=') >=0 && isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
-    $edit_todo = Todo::getTodoById($_GET['edit']);
-}
-
-if(isset($_POST['action-delete']) && isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
-    $result = Todo::delete($_POST['id']);
-    if($result['error']){
-        $error = true;
-        $error_message = $result['message'];
-    }else {
-        header('Location: /');
-    }
-}
-
-if(isset($_POST['action-done']) && isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
-    Todo::done($_POST['id']);
-    if($result['error']){
-        $error = true;
-        $error_message = $result['message'];
-    }else {
-        header('Location: /');
-    }
-}
-
-
-if(isset($_POST['action-task-form']) && isset($_COOKIE['is_logded_in']) && $_COOKIE['is_logded_in']){
-    if(strlen( trim($_POST['title'])) > 0 && strlen( trim($_POST['text'])) > 0 && strlen( trim($_POST['datetime'])) > 0){
-        $date = date('Y-m-d H:i');
-        if($date < $_POST['datetime']){
-            if(isset($_POST['id'])){
-                $result = Todo::updateTodo($_POST['id'],trim($_POST['title']), trim($_POST['text']), trim($_POST['datetime']));
-            }else{
-                $result = Todo::addTodo(trim($_POST['title']), trim($_POST['text']), trim($_POST['datetime']), $_COOKIE['logged_in_user_id'], isset($_POST['parent_id'])?$_POST['parent_id']:0);
-            }
-            if($result['error']){
-                $form_invalid = true;
-                $error_message = $result['message'];
-            }else {
-                header('Location: /');
-            }
-
-        } else {
-            $form_invalid = true;
-            $error_message = ' The date cannot be in past.';
+if(PagesHelper::isActionRegister()){
+    $form = new UserRegisterForm();
+    try{
+        if($form->load($_POST) && $form->validate()){
+            $userService = new UserService( new UserRepository());
+            $user = $userService->register($form);
+            $auth->login($user);
         }
-    } else {
-        $form_invalid = true;
-        $error_message = ' Please fill all the fields and try again.';
+    } catch(\Exception $e) {
+        $error_message = $e->getMessage();
     }
+
 }
 
-if(isset($_POST['action-register'])){
-    if (preg_match("/^(?:[a-z0-9]+(?:[-_.]?[a-z0-9]+)?@[a-z0-9_.-]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", trim ($_POST['email']))) {
-        if(strlen ( trim ($_POST['password'])) < 4){
-            $form_invalid = true;
-            $error_message = ' The password must be at least 4 characters in length.';
-        } else{
-            if(trim ($_POST['password']) !== trim ($_POST['password2'])) {
-                $form_invalid = true;
-                $error_message = ' Your new password and confirmation password do not match. Please confirm and try again.';
-            } else {
-                $result = User::register(trim($_POST['email']), trim($_POST['password']));
-                if($result['error']){
-                    $form_invalid = true;
-                    $error_message = $result['message'];
-                }else {
-                    header('Location: /');
-                }
-            }
+if(PagesHelper::isActionLogin()){
+    $form = new UserLoginForm();
+    try{
+        if($form->load($_POST) && $form->validate()){
+            $userService = new UserService( new UserRepository());
+            $user = $userService->login($form);
+            $auth->login($user);
         }
-    }else{
-        $form_invalid = true;
-        $error_message = ' Enter correct email.';
+    } catch(\Exception $e) {
+        $error_message = $e->getMessage();
     }
+
 }
 
-if(isset($_POST['action-login'])){
-    if (preg_match("/^(?:[a-z0-9]+(?:[-_.]?[a-z0-9]+)?@[a-z0-9_.-]+(?:\.?[a-z0-9]+)?\.[a-z]{2,5})$/i", trim ($_POST['email']))) {
-        if(strlen ( trim ($_POST['password'])) < 4){
-            $form_invalid = true;
-            $error_message = ' The password must be at least 4 characters in length.';
-        } else{
-            $result = User::isUserValid(trim ($_POST['email']), trim ($_POST['password']));
-            if($result['error']){
-                $form_invalid = true;
-                $error_message = $result['message'];
-            }else {
-                header('Location: /');
+if(PagesHelper::isActionLogout()){
+    $auth->logout();
+}
+
+if(!$auth->isGuest()){
+
+    if(PagesHelper::isHome()){
+        $todos = $todoRepository->getUserTodos($user, $todoParentId);
+    }
+
+
+    if(PagesHelper::isPageCreateTodo()){
+        $todoForm = new TodoForm();
+        $todoForm->parent_id = $todoParentId;
+        try{
+            if($todoForm->load($_POST) && $todoForm->validate()){
+                $todoService->create($todoForm);
+                PagesHelper::goToTodos($todoForm->parent_id);
             }
+        } catch(\Exception $e) {
+        $error_message = $e->getMessage();
         }
-    }else{
-        $form_invalid = true;
-        $error_message = ' Enter correct email.';
     }
+
+    if(PagesHelper::isPageEditTodo()){
+
+        $todoForm = new TodoForm();
+        $editedTodo = $todoRepository->getById($todo_id);
+        $todoForm->loadTodo($editedTodo);
+        try{
+            if($todoForm->load($_POST) && $todoForm->validate()){
+                $todoService->edit($editedTodo->id, $todoForm->title, $todoForm->text, $todoForm->date);
+                PagesHelper::goToTodos($todoForm->parent_id);
+            }
+        } catch(\Exception $e) {
+            $error_message = $e->getMessage();
+        }
+    }
+
+    if(PagesHelper::isActionDelete()){
+        $deletingId = PagesHelper::getDeletingId();
+        try {
+            $todoService->delete($deletingId);
+            PagesHelper::goToTodos($todoParentId);
+        } catch(\Exception $e) {
+            $error_message = $e->getMessage();
+        }
+
+    }
+
+    if(PagesHelper::isActionDone()){
+        $doneId = PagesHelper::getDoneId();
+        try{
+            $doneTodo = $todoRepository->getById($doneId);
+            $todoService->done($doneTodo);
+            PagesHelper::goToTodos($todoParentId);
+        } catch(\Exception $e) {
+            $error_message = $e->getMessage();
+        }
+
+    }
+
+
 }
-
-if(isset($_POST['action-logout'])){
-    setcookie('logged_in_user',false);
-    setcookie('is_logded_in',false);
-    header('Location: /');
-
-}
-
-
-
